@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: catholic-guide
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/catholic_guide}
+    username: ${DATABASE_USERNAME:catholic_guide}
+    password: ${DATABASE_PASSWORD:catholic_guide}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+  mail:
+    host: ${SMTP_HOST:localhost}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME:}
+    password: ${SMTP_PASSWORD:}
+    properties:
+      mail.smtp.auth: ${SMTP_AUTH:true}
+      mail.smtp.starttls.enable: ${SMTP_STARTTLS:true}
+
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+
+app:
+  # The parish's local time zone decides which day is "today" on the site.
+  timezone: ${APP_TIMEZONE:Asia/Kolkata}
+  # Origin of the React app, used in invite emails and for CORS during development.
+  site-url: ${APP_SITE_URL:http://localhost:5173}
+  cors-origins: ${APP_CORS_ORIGINS:http://localhost:5173}
+  session-cookie-secure: ${APP_COOKIE_SECURE:false}
+  mail:
+    # When false, sign-in codes and invites are written to the log instead of emailed.
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:Catholic Guide <portal@example.org>}
