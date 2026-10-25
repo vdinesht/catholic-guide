@@ -60,6 +60,27 @@ The reading editor creates a missing day on save, but with no names.
 - Interface strings: `lib/i18n.ts` (English + partial Tamil, falling back to English). **Tamil strings and generated Tamil day names have not been reviewed by a Tamil speaker yet.**
 - Accessibility is part of the design: real buttons and links, labels on every input, 44px touch targets, status shown by shape (filled / ring / dashed) and not by colour alone.
 
+## Choices made without the owner (revisit if they disagree)
+
+- Weekday devotions on Today (`PublicSiteService.DEVOTIONS`): Mon Eternal Rest, Tue St Michael, Wed/Thu Morning Offering, Fri Act of Contrition, Sat Memorare, Sun Our Father. Rosary mysteries by weekday are in `lib/i18n.ts`.
+- "Coming up" lists days with `liturgical_days.highlight = true` (solemnities, All Souls, Advent 1). "Hymn for today" uses `hymn_song_id`, otherwise a published English hymn picked by day of year.
+- The Prayers "month of the Holy Souls" notice shows from 15 October to the end of November.
+- The design's "Lumen remembers your choice" was reworded (Lumen looked like a leftover name).
+- The seed marks "Eternal Rest" and "O Come, O Come, Emmanuel" as live with unpublished edits, so the dashboard has examples of that state.
+
+## State of testing
+
+- Passing: backend `mvn test` (8 tests, including sign-in → publish Tamil → public site and the song-rights rule) and frontend `npm test` / `npm run build`.
+- Compared by screenshot against the design: desktop Today, phone Today + reader + Songs, portal dashboard, Tamil reading editor. Other screens, dark mode and the portal on phone were built but not visually reviewed.
+- Demo data: seeded readings exist only for 24 Oct 2026 (English live, Tamil draft) and 25 Oct (English draft). Use `/?date=2026-10-24` to see a full Today page.
+
+## Known rough edges
+
+- Phone Today always says "Today's Gospel", even when viewing another date (desktop handles it).
+- Portal times use the browser's time zone, not `APP_TIMEZONE`.
+- Readings search matches citation and text in the published JSON; no ranking.
+- The repo's first commit came from GitHub's Java `.gitignore` template, which ignores `*.jar` (fine today: no jars are committed).
+
 ## Open items
 
 - Not deployed anywhere yet. Plan discussed with the owner: Neon (Postgres) + Render (backend Docker + static frontend with an `/api/*` rewrite to keep one origin). Nothing for it is in the repo yet.
